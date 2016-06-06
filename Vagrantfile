@@ -39,6 +39,25 @@ Vagrant.configure(2) do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
 
+  config.nfs.functional = false
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+    vb.cpus = 1
+  end
+
+  config.vm.define "cent7_pup_network" do |cent7|
+    cent7.vm.box = "centos/7"
+
+    cent7.vm.provision "shell", inline: "yum install -y epel-release"
+    cent7.vm.provision "shell", inline: "yum install -y puppet"
+
+    #cent7.vm.privision "puppet" do |puppet|
+      #puppet.module_path = ["modules"]
+      #puppet.manifest_file = "puppet_network_init.pp"
+    #end
+  end
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
