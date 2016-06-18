@@ -45,13 +45,14 @@ Vagrant.configure(2) do |config|
     vb.memory = "1024"
     vb.cpus = 1
   end
+  config.vm.synced_folder "manifests", "/home/vagrant/manifests"
 
   config.vm.define "cent7_pup_network" do |cent7|
     cent7.vm.box = "centos/7"
 
     cent7.vm.provision "shell", inline: "yum install -y epel-release"
     cent7.vm.provision "shell", inline: "yum install -y puppet"
-    cent7.vm.provision "shell", inline: "yum install -y ruby-devel gcc vim git rubygem-bundler"
+    cent7.vm.provision "shell", inline: "yum install -y ruby-devel gcc vim git rubygem-bundler zlib-devel gcc-c++"
 
     #cent7.vm.provision "puppet" do |puppet|
       #puppet.module_path = ["manifests"]
