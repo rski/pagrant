@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "base"
+  config.vm.box = 'base'
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -41,23 +41,17 @@ Vagrant.configure(2) do |config|
 
   config.nfs.functional = false
 
-  config.vm.provider "virtualbox" do |vb|
-    vb.memory = "1024"
+  config.vm.provider 'virtualbox' do |vb|
+    vb.memory = '1024'
     vb.cpus = 1
   end
-  config.vm.synced_folder "manifests", "/home/vagrant/manifests"
+  config.vm.synced_folder 'manifests', '/home/vagrant/manifests'
 
-  config.vm.define "cent7_pup_network" do |cent7|
-    cent7.vm.box = "centos/7"
+  config.vm.define 'cent7_pup_network' do |cent7|
+    cent7.vm.box = 'centos/7'
 
-    cent7.vm.provision "shell", inline: "yum install -y epel-release"
-    cent7.vm.provision "shell", inline: "yum install -y puppet"
-    cent7.vm.provision "shell", inline: "yum install -y ruby-devel gcc vim git rubygem-bundler zlib-devel gcc-c++"
-
-    #cent7.vm.provision "puppet" do |puppet|
-      #puppet.module_path = ["manifests"]
-      #puppet.manifest_file = "network.pp"
-    #end
+    cent7.vm.provision 'shell', inline: 'yum install -y epel-release'
+    cent7.vm.provision 'shell', inline: 'sudo rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm'
+    cent7.vm.provision 'shell', inline: 'yum install -y puppet ruby-devel vim'
   end
-
 end
