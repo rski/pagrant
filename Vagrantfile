@@ -45,7 +45,13 @@ Vagrant.configure(2) do |config|
     vb.memory = '1024'
     vb.cpus = 1
   end
-  config.vm.synced_folder 'manifests', '/home/vagrant/manifests'
+
+  config.vm.synced_folder 'puppet-filemapper', '/home/ubuntu/puppet-filemapper'
+  config.vm.define 'ubu16' do |ubu|
+    ubu.vm.box = 'ubuntu/xenial64'
+    ubu.vm.provision 'shell', inline: 'apt-get update'
+  end
+
 
   config.vm.define 'cent7_pup_network' do |cent7|
     cent7.vm.box = 'centos/7'
